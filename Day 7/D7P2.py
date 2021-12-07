@@ -5,7 +5,7 @@ input = input.readlines()
 input = input[0].split(",")                     # Convert the list of strings into a list of integers
 input = list(map(int, input))
 
-#elegant solution
+#elegant solution - faulty
 position_mean = int(statistics.mean(input))
 min_fuel_use=[]
 for i in range(position_mean, position_mean+2):
