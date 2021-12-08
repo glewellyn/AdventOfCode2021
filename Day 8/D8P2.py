@@ -6,6 +6,7 @@ for i in range(len(input)):                                                     
 
 signals=[]                                                                          # Place signals and segments into two lists
 segments=[]
+decoded_numbers=[]
 for i in range(len(input)):
     signal=[]
     for j in range(10):
@@ -16,9 +17,9 @@ for i in range(len(input)):
         segment.append(''.join(sorted(input[i][j])))
     segments.append(segment)
 
-recognized_digits = [None] * 10
-
+i=0
 for signal in signals:                                                              # Every set of signals contains all 10 digits
+    recognized_digits = [None] * 10
     for digit in signal:                                                            # First find the uniquely identifiable numbers, 1,4,7 and 8
         if len(digit) == 2:                                                         # If lenth is 2, the represented number is 1
             recognized_digits[1] = digit
@@ -61,12 +62,16 @@ for signal in signals:                                                          
                 recognized_digits[9]=digit
             else :
                 recognized_digits[0]=digit
+    signals[i] = recognized_digits
+    i+=1
 
-    print(recognized_digits)
-
+i=0
+total=0
 for segment in segments:
     number = ""
     for digit in segment:
-        number += str(recognized_digits[i].index(digit))
-    print(str(i) + " " + str(number))
+        number += str(signals[i].index(digit))
+    total+=int(number)
     i+=1
+
+print(total)
