@@ -1,21 +1,19 @@
-input = open('input.txt', 'r')                  # Read input file
+input = open('input.txt', 'r')                                                      # Read input file
 input = input.readlines()
 
-for i in range(len(input)):                                                         # Place the signals and segments into a list
+for i in range(len(input)):                                                         # Place signals and display inputs into two lists
     input[i]=input[i].replace('\n',"").replace(" | "," ").split(" ")                # The first 10 places are the signals, the last 4 are segments
-
-signals=[]                                                                          # Place signals and segments into two lists
-segments=[]
-decoded_numbers=[]
+signals=[]
+display_inputs=[]
 for i in range(len(input)):
     signal=[]
     for j in range(10):
-        signal.append(''.join(sorted(input[i][j])))
+        signal.append(''.join(sorted(input[i][j])))                                 # The signals and display inputs are sorted to make comparing them easier
     signals.append(signal)
-    segment=[]
+    display_input=[]
     for j in range(10,14):
-        segment.append(''.join(sorted(input[i][j])))
-    segments.append(segment)
+        display_input.append(''.join(sorted(input[i][j])))
+    display_inputs.append(display_input)
 
 i=0
 for signal in signals:                                                              # Every set of signals contains all 10 digits
@@ -52,26 +50,26 @@ for signal in signals:                                                          
                 recognized_digits[2] = digit
 
     middle_segment=recognized_digits[4]                                             # Only 0 and 9 left to determine, distinguishable by the middle segment.
-    for letter in (recognized_digits[1]):
+    for letter in (recognized_digits[1]):                                           # The middle segment is the segment in digit 4, that isn't in digit 1 nor the upper left segment
         middle_segment=middle_segment.replace(letter,"")
     middle_segment=middle_segment.replace(upper_left_segment,"")
 
-    for digit in signal:                                                            
+    for digit in signal:                                                            # If the digit is length 6 and isn't digit 6 and contains the middle segment it is digit 9
         if len(digit) == 6 and digit != recognized_digits[6]:
             if middle_segment in digit:
                 recognized_digits[9]=digit
-            else :
+            else :                                                                  # Otherwise it is digit 0
                 recognized_digits[0]=digit
     signals[i] = recognized_digits
     i+=1
 
 i=0
 total=0
-for segment in segments:
+for display_input in display_inputs:                                                # Now decode the display inputs into integers
     number = ""
-    for digit in segment:
+    for digit in display_input:
         number += str(signals[i].index(digit))
-    total+=int(number)
+    total+=int(number)                                                              # Add them up
     i+=1
 
-print(total)
+print(total)                                                                        # Print the answer
