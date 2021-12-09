@@ -26,24 +26,9 @@ for y in range(len(floormap)):
         else:   right=floormap[y][x+1]
         if y == len(floormap) - 1:   below=10
         else:   below=floormap[y+1][x]
-        '''
-        print("x=" + str(x) + " y=" + str(y) )
-        print("Here:" + str(floormap[y][x]))
-        print("Above:" + str(above))
-        print("Left:" + str(left))
-        print("Right:" + str(right))
-        print("Below:" + str(below))
-        print()
-        '''
         if floormap[y][x] < min(above, left, right, below):
             low_points.append(floormap[y][x])
-            print(colored(str(floormap[y][x]), "white", attrs=['bold']), end="")
-        else:
-            print(colored(str(floormap[y][x]), "grey", attrs=['bold']), end="")
-    print()
 
-
-print(low_points)
 solution=0
 for low_point in low_points:
     solution += low_point + 1
